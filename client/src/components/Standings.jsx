@@ -16,8 +16,8 @@ export default function Standings({ championshipId }) {
   if (standings.length === 0) return <div className="text-center text-gray-500 py-12">Nincs adat</div>
 
   return (
-    <div className="bg-gray-900 rounded-xl border border-gray-800 overflow-hidden">
-      <table className="w-full text-sm">
+    <div className="bg-gray-900 rounded-xl border border-gray-800 overflow-x-auto">
+      <table className="w-full text-sm min-w-[560px]">
         <thead>
           <tr className="border-b border-gray-800">
             <th className="text-left px-4 py-3 text-gray-400 font-medium w-8">#</th>
