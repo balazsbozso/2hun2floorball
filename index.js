@@ -44,6 +44,7 @@ app.get('/api/championships', async (req, res) => {
       SELECT id, ch_id, name, priority
       FROM championships
       WHERE season_id = $1
+        AND name NOT ILIKE '%teszt%'
       ORDER BY
         priority ASC,
         CASE
