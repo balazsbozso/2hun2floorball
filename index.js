@@ -44,7 +44,13 @@ app.get('/api/championships', async (req, res) => {
       SELECT id, ch_id, name, priority
       FROM championships
       WHERE season_id = $1
-      ORDER BY priority ASC, name ASC
+      ORDER BY
+        priority ASC,
+        CASE
+          WHEN name ILIKE 'Férfi%' OR name ILIKE 'Női%' THEN 0
+          ELSE 1
+        END ASC,
+        name ASC
     `, [season_id]);
     res.json(result.rows);
   } catch (err) {
