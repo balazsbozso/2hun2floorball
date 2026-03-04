@@ -117,6 +117,35 @@ app.get('/api/standings', async (req, res) => {
   }
 });
 
+// Játékos statisztikák egy bajnokságban
+app.get('/api/player-standings', async (req, res) => {
+  const { championship_id } = req.query;
+  if (!championship_id) return res.status(400).json({ error: 'championship_id kötelező' });
+
+  try {
+    const result = await pool.query(`
+      SELECT
+        p.name AS player,
+        t.name AS team,
+        COUNT(DISTINCT mps.match_id) AS games,
+        SUM(mps.goals) AS goals,
+        SUM(mps.assists) AS assists,
+        SUM(mps.goals) + SUM(mps.assists) AS points,
+        SUM(mps.penalty_minutes) AS pim
+      FROM match_player_stats mps
+      JOIN players p ON p.id = mps.player_id
+      JOIN teams t ON t.id = mps.team_id
+      JOIN matches m ON m.id = mps.match_id
+      WHERE m.championship_id = $1 AND m.is_finished = TRUE
+      GROUP BY p.id, p.name, t.name
+      ORDER BY points DESC, goals DESC, assists DESC
+    `, [championship_id]);
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // Meccsek egy bajnokságban
 app.get('/api/matches', async (req, res) => {
   const { championship_id } = req.query;

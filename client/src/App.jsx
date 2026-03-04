@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import Standings from './components/Standings'
 import Matches from './components/Matches'
+import PlayerStandings from './components/PlayerStandings'
 
 export default function App() {
   const [seasons, setSeasons] = useState([])
@@ -75,6 +76,7 @@ export default function App() {
               {[
                 { key: 'standings', label: 'Tabella' },
                 { key: 'matches', label: 'Mérkőzések' },
+                { key: 'players', label: 'Játékosok' },
               ].map(tab => (
                 <button
                   key={tab.key}
@@ -95,6 +97,9 @@ export default function App() {
             )}
             {activeTab === 'matches' && (
               <Matches championshipId={selectedChampionship.id} />
+            )}
+            {activeTab === 'players' && (
+              <PlayerStandings championshipId={selectedChampionship.id} />
             )}
           </>
         )}
