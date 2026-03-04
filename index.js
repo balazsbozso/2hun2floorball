@@ -41,10 +41,10 @@ app.get('/api/championships', async (req, res) => {
 
   try {
     const result = await pool.query(`
-      SELECT id, ch_id, name
+      SELECT id, ch_id, name, priority
       FROM championships
       WHERE season_id = $1
-      ORDER BY name
+      ORDER BY priority ASC, name ASC
     `, [season_id]);
     res.json(result.rows);
   } catch (err) {
