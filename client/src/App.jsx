@@ -32,7 +32,7 @@ export default function App() {
       {/* Header */}
       <header className="bg-gray-900 border-b border-gray-800 px-6 py-4">
         <div className="max-w-6xl mx-auto flex items-center gap-3">
-          <h1 className="text-xl font-bold text-white tracking-tight">2hun2floorball</h1>
+          <h1 className="text-xl font-bold text-white tracking-tight">Hunfloorball Stats</h1>
           <span className="text-gray-500 text-sm ml-auto">Magyar Floorball Statisztikák</span>
         </div>
       </header>
