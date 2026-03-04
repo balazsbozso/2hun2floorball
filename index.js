@@ -132,7 +132,11 @@ app.get('/api/matches', async (req, res) => {
       JOIN teams ht ON ht.id = m.home_team_id
       JOIN teams at ON at.id = m.away_team_id
       WHERE m.championship_id = $1
-      ORDER BY m.match_date ASC NULLS LAST, m.round ASC NULLS LAST
+      ORDER BY
+        m.is_finished ASC,
+        CASE WHEN m.is_finished = FALSE THEN m.match_date END ASC NULLS LAST,
+        CASE WHEN m.is_finished = TRUE  THEN m.match_date END DESC NULLS LAST,
+        m.round ASC NULLS LAST
     `, [championship_id]);
     res.json(result.rows);
   } catch (err) {
