@@ -25,11 +25,12 @@ export default function PlayerStandings({ championshipId }) {
   }, [championshipId])
 
   const sorted = useMemo(() => {
+    const col = COLS.find(c => c.key === sortKey)
     return [...players].sort((a, b) => {
       const av = a[sortKey], bv = b[sortKey]
       if (av == null) return 1
       if (bv == null) return -1
-      const cmp = typeof av === 'string' ? av.localeCompare(bv, 'hu') : Number(av) - Number(bv)
+      const cmp = col?.numeric ? Number(av) - Number(bv) : String(av).localeCompare(String(bv), 'hu')
       return sortAsc ? cmp : -cmp
     })
   }, [players, sortKey, sortAsc])
