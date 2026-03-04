@@ -19,6 +19,8 @@ export default function PlayerStandings({ championshipId }) {
 
   useEffect(() => {
     setLoading(true)
+    setSortKey('points')
+    setSortAsc(false)
     axios.get(`/api/player-standings?championship_id=${championshipId}`)
       .then(r => setPlayers(r.data))
       .finally(() => setLoading(false))
